@@ -1,0 +1,10 @@
+*.o
+*.d
+*.swp
+examples/*
+*.png
+sray
+vsray/vsray
+prev/prev
+3ds2sray/3ds2sray
+obj2sray/obj2sray

@@ -13,7 +13,7 @@ CC = gcc
 CXX = g++
 CFLAGS = -pedantic $(warn) $(dbg) $(opt) $(prof) $(def) `pkg-config --cflags vmath imago`
 CXXFLAGS = -pedantic $(warn) -Wno-deprecated $(dbg) $(opt) $(prof) $(def) `pkg-config --cflags vmath imago`
-LDFLAGS = $(prof) $(gllibs_$(shell uname -s)) `pkg-config --libs vmath imago` $(wsys_libs) -lm -lexpat -lkdtree
+LDFLAGS = $(prof) $(gllibs_$(shell uname -s)) `pkg-config --libs vmath imago` $(wsys_libs) -lm -lexpat -lkdtree -lpthread
 
 ifeq ($(shell uname -s), Darwin)
 	def = -DNO_THREADS

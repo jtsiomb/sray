@@ -1,3 +1,4 @@
+#include <unistd.h>
 #include "render.h"
 #include "tpool.h"
 #include "block.h"
@@ -158,14 +159,14 @@ static bool start_frame(long t0, long t1, bool calc_prior)
 	for(int i=0; i<xblocks; i++) {
 		for(int j=0; j<yblocks; j++) {
 			struct block *blk;
-			
+
 			if(!(blk = get_block(i, j, opt.blk_sz))) {
 				perror("start_frame failed");
 				return false;
 			}
 			blk->t0 = t0;
 			blk->t1 = t1;
-			
+
 			if(calc_prior) {
 				// calculate gaussian priority
 				/*double dx = 2.0 * (double)(blk->x + blk->xsz / 2.0) / (double)opt.width - 1.0;
@@ -201,12 +202,6 @@ static void render_block(void *cls)
 	}
 
 	Color *subpix = (Color*)alloca(opt.max_samples * sizeof *subpix);
-	double *rcp_lut = (double*)alloca((1 + opt.max_samples) * sizeof *rcp_lut);
-
-	for(int i=1; i<=opt.max_samples; i++) {
-		rcp_lut[i] = 1.0 / (double)i;
-	}
-
 	int xsz = framebuffer->get_width();
 	int start_offs = blk->y * xsz + blk->x;
 	float *img = framebuffer->get_pixels() + start_offs * 4;
@@ -230,14 +225,18 @@ static void render_block(void *cls)
 				i++;
 
 				if(i >= opt.min_samples && i > 1) {
-					float v = variance(subpix, pixel, i, rcp_lut[i]);
+					float v = variance(subpix, pixel, i, 1.0f / i);
 					if(v < opt.max_var) {
 						break;
 					}
 				}
 			}
 
-			img[x] *= rcp_lut[i];
+			float s = 1.0f / (float)i;
+			img[x * 4] *= s;
+			img[x * 4 + 1] *= s;
+			img[x * 4 + 2] *= s;
+			img[x * 4 + 3] *= s;
 		}
 		img += xsz * 4;
 	}

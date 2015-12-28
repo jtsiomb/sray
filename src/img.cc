@@ -17,6 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include <stdlib.h>
 #include <imago2.h>
+#include <new>
 #include "img.h"
 
 Image::Image()

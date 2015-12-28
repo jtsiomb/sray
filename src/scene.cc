@@ -389,7 +389,6 @@ bool Scene::build_tree(int t0, int t1)
 	return true;
 }
 
-#if 0
 bool Scene::build_photon_maps(int t0, int t1)
 {
 	if(lights.empty() || (!opt.caust_photons && !opt.gi_photons)) {
@@ -440,7 +439,6 @@ bool Scene::build_photon_maps(int t0, int t1)
 	}
 	return true;
 }
-#endif
 
 int Scene::build_caustics_map(int t0, int t1, int num_photons, LightPower *ltpow)
 {

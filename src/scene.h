@@ -115,7 +115,7 @@ public:
 	 */
 	bool build_tree(int t0 = 0, int t1 = INT_MIN);
 
-	//bool build_photon_maps(int t0 = 0, int t1 = INT_MIN);
+	bool build_photon_maps(int t0 = 0, int t1 = INT_MIN);
 	
 	int build_caustics_map(int t0, int t1, int num_photons, LightPower *ltpow);
 	int build_global_map(int t0, int t1, int num_photons, LightPower *ltpow);
